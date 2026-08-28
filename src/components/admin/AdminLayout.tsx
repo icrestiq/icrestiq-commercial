@@ -1,9 +1,12 @@
+import { useEffect, useState } from 'react'
 import { NavLink, Outlet } from 'react-router-dom'
 import { useAdminHead } from '../../hooks/useAdminHead'
 import { useAdminAuth } from '../../lib/AdminAuthContext'
+import { getSupabase } from '../../lib/supabase'
 
 const links = [
   { to: '/admin', label: 'Dashboard', end: true },
+  { to: '/admin/quote-requests', label: 'Quote Requests' },
   { to: '/admin/companies', label: 'Companies' },
   { to: '/admin/contacts', label: 'Contacts' },
   { to: '/admin/deals', label: 'Deals' },
@@ -13,6 +16,15 @@ const links = [
 export default function AdminLayout() {
   useAdminHead('Admin | iCrestiQ Commercial')
   const { user, signOut } = useAdminAuth()
+  const [newQuoteRequests, setNewQuoteRequests] = useState(0)
+
+  useEffect(() => {
+    getSupabase()
+      .from('quote_requests')
+      .select('id', { count: 'exact', head: true })
+      .eq('status', 'new')
+      .then(({ count }) => setNewQuoteRequests(count ?? 0))
+  }, [])
 
   return (
     <div className="min-h-screen bg-cold-50">
@@ -35,6 +47,11 @@ export default function AdminLayout() {
                   }
                 >
                   {link.label}
+                  {link.to === '/admin/quote-requests' && newQuoteRequests > 0 && (
+                    <span className="ml-1.5 inline-flex min-w-[1.25rem] items-center justify-center rounded-full bg-orange-500 px-1.5 py-0.5 font-mono text-[10px] text-steel-950">
+                      {newQuoteRequests}
+                    </span>
+                  )}
                 </NavLink>
               ))}
             </nav>

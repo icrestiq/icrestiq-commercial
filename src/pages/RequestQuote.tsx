@@ -4,9 +4,10 @@ import { equipmentCategories } from '../data/equipmentCategories'
 
 const OTHER_OPTION = 'Not sure / need guidance'
 
-// Real, confirmed inbox (2026-08-28). mailto is still an interim submission
-// path — consider a real form backend (Formspree/Netlify Forms) later so
-// quote requests don't depend on the visitor's own email client sending.
+// Fallback inbox shown only if the direct submission below fails (network
+// issue, etc.) — the primary path writes straight into the admin CRM's
+// quote_requests table via a dynamically-imported Supabase client, so this
+// chunk never loads for a visitor who never opens the form.
 const QUOTE_INBOX = 'quotes@icrestiq.com'
 
 type FormState = {
@@ -36,14 +37,44 @@ const initialState: FormState = {
 export default function RequestQuote() {
   const [form, setForm] = useState<FormState>(initialState)
   const [sent, setSent] = useState(false)
+  const [submitting, setSubmitting] = useState(false)
+  const [failed, setFailed] = useState(false)
 
   function update<K extends keyof FormState>(key: K, value: FormState[K]) {
     setForm((f) => ({ ...f, [key]: value }))
   }
 
-  function handleSubmit(e: FormEvent) {
+  async function handleSubmit(e: FormEvent) {
     e.preventDefault()
+    setSubmitting(true)
+    setFailed(false)
 
+    try {
+      // Dynamic import keeps @supabase/supabase-js out of the public bundle
+      // for every visitor who never submits this form — only downloaded on
+      // actual submit, same code-splitting principle used for /admin.
+      const { getSupabase } = await import('../lib/supabase')
+      const { error } = await getSupabase().from('quote_requests').insert({
+        name: form.name.trim(),
+        company: form.company.trim() || null,
+        email: form.email.trim(),
+        phone: form.phone.trim() || null,
+        buyer_type: form.buyerType,
+        equipment: form.equipment,
+        quantity: form.quantity.trim() || null,
+        timeline: form.timeline.trim() || null,
+        details: form.details.trim() || null,
+      })
+      if (error) throw error
+      setSent(true)
+    } catch {
+      setFailed(true)
+    } finally {
+      setSubmitting(false)
+    }
+  }
+
+  function handleMailtoFallback() {
     const subject = `Quote Request — ${form.equipment} (${form.buyerType})`
     const body = [
       `Name: ${form.name}`,
@@ -58,9 +89,7 @@ export default function RequestQuote() {
       'Details:',
       form.details,
     ].join('\n')
-
     window.location.href = `mailto:${QUOTE_INBOX}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
-    setSent(true)
   }
 
   return (
@@ -80,10 +109,10 @@ export default function RequestQuote() {
         {sent ? (
           <SpecPlate tone="light">
             <div role="status">
-              <h2 className="font-display text-2xl font-bold uppercase text-steel-900">Request Ready to Send</h2>
+              <h2 className="font-display text-2xl font-bold uppercase text-steel-900">Request Received</h2>
               <p className="mt-2 text-sm leading-relaxed text-steel-700">
-                Your email app should have opened with the details filled in — send it from
-                there and we'll follow up. If nothing opened, email us directly at{' '}
+                Thanks — your request has been sent straight to our sales team and we'll
+                follow up shortly. If it's urgent, you can also reach us directly at{' '}
                 <a href={`mailto:${QUOTE_INBOX}`} className="text-hydro-500 underline">
                   {QUOTE_INBOX}
                 </a>
@@ -92,14 +121,32 @@ export default function RequestQuote() {
             </div>
             <button
               type="button"
-              onClick={() => setSent(false)}
+              onClick={() => {
+                setSent(false)
+                setForm(initialState)
+              }}
               className="mt-4 font-display text-lg uppercase tracking-wide text-orange-600 hover:underline"
             >
-              ← Edit Request
+              ← Submit Another Request
             </button>
           </SpecPlate>
         ) : (
           <form onSubmit={handleSubmit} className="space-y-6">
+            {failed && (
+              <div role="alert" className="border border-orange-600 bg-orange-50 px-4 py-3">
+                <p className="text-sm text-steel-900">
+                  Something went wrong sending your request. You can try again, or{' '}
+                  <button
+                    type="button"
+                    onClick={handleMailtoFallback}
+                    className="text-hydro-500 underline hover:text-hydro-400"
+                  >
+                    email us directly
+                  </button>{' '}
+                  instead.
+                </p>
+              </div>
+            )}
             <div className="grid gap-6 sm:grid-cols-2">
               <Field label="Full Name" required>
                 <input
@@ -217,9 +264,10 @@ export default function RequestQuote() {
 
             <button
               type="submit"
-              className="w-full bg-orange-600 px-6 py-4 font-display text-lg uppercase tracking-wide text-cold-50 transition-colors hover:bg-steel-900 hover:text-orange-400 sm:w-auto"
+              disabled={submitting}
+              className="w-full bg-orange-600 px-6 py-4 font-display text-lg uppercase tracking-wide text-cold-50 transition-colors hover:bg-steel-900 hover:text-orange-400 disabled:opacity-50 sm:w-auto"
             >
-              Send Quote Request
+              {submitting ? 'Sending…' : 'Send Quote Request'}
             </button>
           </form>
         )}

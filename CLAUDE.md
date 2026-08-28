@@ -152,6 +152,24 @@ Never store passwords, API keys, access tokens, credentials, private authenticat
   revisiting the plan in `Decisions.md` first (no public shopping cart was
   the explicit decision; per-order Stripe Payment Links from inside the
   admin panel is the intended future direction).
+- **Request a Quote submits directly into the CRM (added 2026-08-28):**
+  `src/pages/RequestQuote.tsx` inserts into a `quote_requests` table (public
+  RLS: `anon` can `INSERT` only, `is_admin()` required for everything else)
+  instead of building a `mailto:` link. It reaches Supabase via a **dynamic**
+  `import('../lib/supabase')` inside the submit handler specifically so
+  `@supabase/supabase-js` stays out of the public bundle for every visitor
+  who never submits the form — do not switch this to a static import at the
+  top of the file, that regresses the exact bundle-bloat issue the admin
+  code-splitting was built to avoid. `src/pages/admin/QuoteRequestsList.tsx`
+  (`/admin/quote-requests`) lists submissions and has a one-click "Convert to
+  Company / Contact / Deal" action: it finds-or-creates the company (name,
+  case-insensitive) and contact (email, case-insensitive), opens a deal in
+  the first `stage_type = 'open'` stage, links both, and writes a `notes`
+  row with whatever doesn't have its own CRM column (phone/quantity/
+  timeline/details) so context isn't lost. `AdminLayout`'s nav shows a badge
+  with the count of `status = 'new'` requests. On submission failure the
+  form falls back to offering the old `mailto:` link rather than silently
+  losing the lead.
 - `.env.local` (gitignored) holds `VITE_SUPABASE_URL`/`VITE_SUPABASE_ANON_KEY`
   — see `.env.example`. These must also be set in the Vercel project once
   deployment resumes, or the admin bundle will throw on first use (the

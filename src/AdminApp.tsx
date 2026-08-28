@@ -10,6 +10,7 @@ import ContactsList from './pages/admin/ContactsList'
 import ContactDetail from './pages/admin/ContactDetail'
 import DealsPipeline from './pages/admin/DealsPipeline'
 import TasksView from './pages/admin/TasksView'
+import QuoteRequestsList from './pages/admin/QuoteRequestsList'
 
 // Everything the admin CRM needs (Supabase client, @dnd-kit/core, every
 // admin page) lives behind this one module, which src/App.tsx loads via
@@ -29,6 +30,7 @@ export default function AdminApp() {
           }
         >
           <Route index element={<AdminDashboard />} />
+          <Route path="quote-requests" element={<QuoteRequestsList />} />
           <Route path="companies" element={<CompaniesList />} />
           <Route path="companies/:id" element={<CompanyDetail />} />
           <Route path="contacts" element={<ContactsList />} />

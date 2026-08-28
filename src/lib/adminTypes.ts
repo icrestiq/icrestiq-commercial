@@ -3,6 +3,7 @@ export type ContactRole = 'decision_maker' | 'purchasing' | 'technical' | 'opera
 export type DealStageType = 'open' | 'won' | 'lost'
 export type DealCompanyRole = 'customer' | 'manufacturer' | 'dealer' | 'competitor'
 export type DealContactRole = 'primary_contact' | 'decision_maker' | 'technical_contact' | 'other'
+export type QuoteRequestStatus = 'new' | 'contacted' | 'converted' | 'archived'
 
 export interface Company {
   id: string
@@ -75,5 +76,23 @@ export interface Task {
   title: string
   due_date: string | null
   completed_at: string | null
+  created_at: string
+}
+
+export interface QuoteRequest {
+  id: string
+  name: string
+  company: string | null
+  email: string
+  phone: string | null
+  buyer_type: 'Commercial / B2B' | 'Government / Institutional'
+  equipment: string | null
+  quantity: string | null
+  timeline: string | null
+  details: string | null
+  status: QuoteRequestStatus
+  converted_company_id: string | null
+  converted_contact_id: string | null
+  converted_deal_id: string | null
   created_at: string
 }
