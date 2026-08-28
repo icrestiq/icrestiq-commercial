@@ -1,0 +1,107 @@
+@import "tailwindcss";
+
+@theme {
+  /* Steel Charcoal — primary dark surface */
+  --color-steel-950: #14181a;
+  --color-steel-900: #181d20;
+  --color-steel-800: #232a2e;
+  --color-steel-700: #323b40;
+  --color-steel-600: #4a555b;
+
+  /* Gauge Grey — mid neutrals / muted text on dark */
+  --color-gauge-600: #525a5e;
+  --color-gauge-500: #6b7478;
+  --color-gauge-400: #8a9296;
+  --color-gauge-300: #aeb4b6;
+
+  /* Cold White — light surfaces */
+  --color-cold-50: #f3f4f0;
+  --color-cold-100: #e8e9e3;
+  --color-cold-200: #dadcd6;
+
+  /* Safety Orange — signature accent */
+  --color-orange-600: #b83e14;
+  --color-orange-500: #d9491b;
+  --color-orange-400: #e8632f;
+
+  /* Hydro Blue — secondary accent, water/pressure motif */
+  --color-hydro-600: #2c5568;
+  --color-hydro-500: #3e6e82;
+  --color-hydro-400: #5a8ea3;
+
+  --font-display: "Barlow Condensed", "Arial Narrow", sans-serif;
+  --font-body: "IBM Plex Sans", "Segoe UI", sans-serif;
+  --font-mono: "IBM Plex Mono", "Consolas", monospace;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--color-cold-50);
+  color: var(--color-steel-900);
+  font-family: var(--font-body);
+}
+
+::selection {
+  background-color: var(--color-orange-500);
+  color: var(--color-cold-50);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-orange-500);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Skip link — off-screen until focused (Tab from page load), then pinned
+   to the top-left so keyboard users can bypass the nav straight to main
+   content. */
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 100;
+  background: var(--color-orange-600);
+  color: var(--color-cold-50);
+  padding: 0.75rem 1.25rem;
+  font-family: var(--font-display);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.skip-link:focus {
+  left: 0;
+}
+
+/* Riveted corner-tab treatment for spec-plate panels — the site's signature motif */
+.spec-plate {
+  position: relative;
+}
+.spec-plate::before,
+.spec-plate::after {
+  content: "";
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border-radius: 9999px;
+  background: var(--color-orange-500);
+  top: 8px;
+}
+.spec-plate::before {
+  left: 8px;
+}
+.spec-plate::after {
+  right: 8px;
+}
