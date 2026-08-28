@@ -1,14 +1,18 @@
-import { useState, type FormEvent, type ReactNode } from 'react'
+import { useRef, useState, type FormEvent, type ReactNode } from 'react'
 import { SpecPlate } from '../components/SpecPlate'
 import { equipmentCategories } from '../data/equipmentCategories'
+import Turnstile, { type TurnstileHandle } from '../components/Turnstile'
 
 const OTHER_OPTION = 'Not sure / need guidance'
 
 // Fallback inbox shown only if the direct submission below fails (network
-// issue, etc.) — the primary path writes straight into the admin CRM's
-// quote_requests table via a dynamically-imported Supabase client, so this
-// chunk never loads for a visitor who never opens the form.
+// issue, etc.) — the primary path posts to api/quote/submit.js, which
+// verifies the submission server-side (honeypot, fill-time, Turnstile) and
+// writes into the admin CRM's quote_requests table with the service-role
+// key. Nothing here talks to Supabase directly anymore.
 const QUOTE_INBOX = 'quotes@icrestiq.com'
+
+const TURNSTILE_SITE_KEY = import.meta.env.VITE_TURNSTILE_SITE_KEY as string | undefined
 
 type FormState = {
   name: string
@@ -39,6 +43,15 @@ export default function RequestQuote() {
   const [sent, setSent] = useState(false)
   const [submitting, setSubmitting] = useState(false)
   const [failed, setFailed] = useState(false)
+  const [errorMessage, setErrorMessage] = useState('')
+
+  // Honeypot — real visitors never see or fill this field (off-screen, out
+  // of tab order). Any value present flags the submission as automated.
+  const [website, setWebsite] = useState('')
+  const renderedAt = useRef(Date.now())
+
+  const [captchaToken, setCaptchaToken] = useState('')
+  const turnstileRef = useRef<TurnstileHandle>(null)
 
   function update<K extends keyof FormState>(key: K, value: FormState[K]) {
     setForm((f) => ({ ...f, [key]: value }))
@@ -46,29 +59,46 @@ export default function RequestQuote() {
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault()
-    setSubmitting(true)
     setFailed(false)
+    setErrorMessage('')
 
-    try {
-      // Dynamic import keeps @supabase/supabase-js out of the public bundle
-      // for every visitor who never submits this form — only downloaded on
-      // actual submit, same code-splitting principle used for /admin.
-      const { getSupabase } = await import('../lib/supabase')
-      const { error } = await getSupabase().from('quote_requests').insert({
-        name: form.name.trim(),
-        company: form.company.trim() || null,
-        email: form.email.trim(),
-        phone: form.phone.trim() || null,
-        buyer_type: form.buyerType,
-        equipment: form.equipment,
-        quantity: form.quantity.trim() || null,
-        timeline: form.timeline.trim() || null,
-        details: form.details.trim() || null,
-      })
-      if (error) throw error
-      setSent(true)
-    } catch {
+    if (TURNSTILE_SITE_KEY && !captchaToken) {
       setFailed(true)
+      setErrorMessage('Please complete the verification challenge.')
+      return
+    }
+
+    setSubmitting(true)
+    try {
+      const res = await fetch('/api/quote/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: form.name.trim(),
+          company: form.company.trim(),
+          email: form.email.trim(),
+          phone: form.phone.trim(),
+          buyerType: form.buyerType,
+          equipment: form.equipment,
+          quantity: form.quantity.trim(),
+          timeline: form.timeline.trim(),
+          details: form.details.trim(),
+          website,
+          renderedAt: renderedAt.current,
+          turnstileToken: captchaToken,
+        }),
+      })
+      const data = await res.json().catch(() => ({}))
+      if (!res.ok) throw new Error(data.error || 'Something went wrong. Please try again.')
+      setSent(true)
+    } catch (err) {
+      setFailed(true)
+      setErrorMessage(err instanceof Error ? err.message : 'Something went wrong. Please try again.')
+      // Turnstile tokens are single-use — whether the server rejected this
+      // one or something else failed, it's already spent, so the widget
+      // needs a fresh challenge before the next submit attempt can work.
+      turnstileRef.current?.reset()
+      setCaptchaToken('')
     } finally {
       setSubmitting(false)
     }
@@ -124,6 +154,9 @@ export default function RequestQuote() {
               onClick={() => {
                 setSent(false)
                 setForm(initialState)
+                setCaptchaToken('')
+                turnstileRef.current?.reset()
+                renderedAt.current = Date.now()
               }}
               className="mt-4 font-display text-lg uppercase tracking-wide text-orange-600 hover:underline"
             >
@@ -135,7 +168,7 @@ export default function RequestQuote() {
             {failed && (
               <div role="alert" className="border border-orange-600 bg-orange-50 px-4 py-3">
                 <p className="text-sm text-steel-900">
-                  Something went wrong sending your request. You can try again, or{' '}
+                  {errorMessage || 'Something went wrong sending your request.'} You can try again, or{' '}
                   <button
                     type="button"
                     onClick={handleMailtoFallback}
@@ -147,6 +180,30 @@ export default function RequestQuote() {
                 </p>
               </div>
             )}
+
+            {/*
+              Honeypot field. Visually hidden and pulled out of tab order so
+              real visitors never see or reach it, but bots that blindly
+              fill every input on the page will populate it — which flags
+              the submission as automated server-side (see
+              api/quote/submit.js). Do not add `display: none` or
+              `type="hidden"`; some bots skip fields styled that way.
+              Off-screen positioning plus aria-hidden is the more robust
+              pattern.
+            */}
+            <div aria-hidden="true" style={{ position: 'absolute', left: '-9999px', width: 1, height: 1, overflow: 'hidden' }}>
+              <label htmlFor="quote-website">Website (leave this blank)</label>
+              <input
+                id="quote-website"
+                name="website"
+                type="text"
+                tabIndex={-1}
+                autoComplete="off"
+                value={website}
+                onChange={(e) => setWebsite(e.target.value)}
+              />
+            </div>
+
             <div className="grid gap-6 sm:grid-cols-2">
               <Field label="Full Name" required>
                 <input
@@ -261,6 +318,8 @@ export default function RequestQuote() {
                 className={inputClass}
               />
             </Field>
+
+            <Turnstile ref={turnstileRef} onVerify={setCaptchaToken} />
 
             <button
               type="submit"

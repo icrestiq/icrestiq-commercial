@@ -153,14 +153,8 @@ Never store passwords, API keys, access tokens, credentials, private authenticat
   the explicit decision; per-order Stripe Payment Links from inside the
   admin panel is the intended future direction).
 - **Request a Quote submits directly into the CRM (added 2026-08-28):**
-  `src/pages/RequestQuote.tsx` inserts into a `quote_requests` table (public
-  RLS: `anon` can `INSERT` only, `is_admin()` required for everything else)
-  instead of building a `mailto:` link. It reaches Supabase via a **dynamic**
-  `import('../lib/supabase')` inside the submit handler specifically so
-  `@supabase/supabase-js` stays out of the public bundle for every visitor
-  who never submits the form — do not switch this to a static import at the
-  top of the file, that regresses the exact bundle-bloat issue the admin
-  code-splitting was built to avoid. `src/pages/admin/QuoteRequestsList.tsx`
+  `src/pages/RequestQuote.tsx` submits into a `quote_requests` table instead
+  of building a `mailto:` link. `src/pages/admin/QuoteRequestsList.tsx`
   (`/admin/quote-requests`) lists submissions and has a one-click "Convert to
   Company / Contact / Deal" action: it finds-or-creates the company (name,
   case-insensitive) and contact (email, case-insensitive), opens a deal in
@@ -170,6 +164,31 @@ Never store passwords, API keys, access tokens, credentials, private authenticat
   with the count of `status = 'new'` requests. On submission failure the
   form falls back to offering the old `mailto:` link rather than silently
   losing the lead.
+- **Bot protection on Request a Quote, modeled on icrestiq-govcon-lab's real
+  implementation (added 2026-08-28):** the form no longer talks to Supabase
+  at all — it `fetch()`s `POST /api/quote/submit`, this site's **first-ever
+  serverless function** (`api/quote/submit.js`, root-level `api/` directory,
+  Vercel auto-detects it). That function is now the *only* writer to
+  `quote_requests`, using `SUPABASE_SERVICE_ROLE_KEY` (bypasses RLS) — the
+  table's earlier public `INSERT` policy is gone, so a bot can no longer
+  write a row by hitting Supabase's REST API directly with the public anon
+  key, which was possible before this change. Three checks run server-side,
+  in order: (1) a honeypot field (`website`, rendered off-screen in
+  `RequestQuote.tsx`, never `display:none` — some bots skip fields styled
+  that way), (2) a minimum-fill-time check (`renderedAt`, rejects
+  submissions faster than 1.5s), (3) a Cloudflare Turnstile challenge
+  (`src/components/Turnstile.tsx`, loads Cloudflare's script on demand only
+  when it mounts — not globally in `index.html` — so pages other than
+  `/quote` don't pay for it). Turnstile needs `VITE_TURNSTILE_SITE_KEY`
+  (client, public) and `TURNSTILE_SECRET_KEY` (server-only, Vercel env var)
+  from a Cloudflare Turnstile site the user creates — **until both are set,
+  the widget doesn't render and the server fails open** (skips Turnstile
+  verification with a `console.warn`, same transitional pattern GovCon Lab
+  used), so the form keeps working with honeypot + fill-time protection only
+  in the meantime. See `.env.example` for exactly which vars are
+  client-safe (`VITE_`-prefixed) vs. server-only. Do not add a public
+  `INSERT` policy back to `quote_requests` — that's the exact hole this
+  closed.
 - `.env.local` (gitignored) holds `VITE_SUPABASE_URL`/`VITE_SUPABASE_ANON_KEY`
   — see `.env.example`. These must also be set in the Vercel project once
   deployment resumes, or the admin bundle will throw on first use (the
