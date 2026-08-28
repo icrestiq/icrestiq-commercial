@@ -28,8 +28,6 @@
 
 import { createClient } from '@supabase/supabase-js'
 
-const supabase = createClient(process.env.VITE_SUPABASE_URL, process.env.SUPABASE_SERVICE_ROLE_KEY)
-
 const TURNSTILE_SECRET_KEY = process.env.TURNSTILE_SECRET_KEY
 const MIN_FILL_TIME_MS = 1500
 const BUYER_TYPES = ['Commercial / B2B', 'Government / Institutional']
@@ -60,6 +58,16 @@ function isValidEmail(email) {
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' })
+
+  // Checked per-request (not at module scope) so a missing env var returns
+  // a clean JSON error instead of crashing the whole function process —
+  // same "fail informatively" convention as the client-side lazy Supabase
+  // singleton in src/lib/supabase.ts.
+  if (!process.env.VITE_SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE_KEY) {
+    console.error('Missing VITE_SUPABASE_URL / SUPABASE_SERVICE_ROLE_KEY — quote submission cannot be saved.')
+    return res.status(500).json({ error: 'Something went wrong. Please try again.' })
+  }
+  const supabase = createClient(process.env.VITE_SUPABASE_URL, process.env.SUPABASE_SERVICE_ROLE_KEY)
 
   try {
     const body = req.body || {}
