@@ -3,6 +3,17 @@ import { SpecPlate, SpecRow } from '../components/SpecPlate'
 import CategoryCard from '../components/CategoryCard'
 import { equipmentCategories } from '../data/equipmentCategories'
 
+// Homepage-only decoration — deliberately not part of the equipmentCategories
+// data model. This is a presentation choice for this one page (Equipment.tsx
+// renders the same CategoryCard for the same categories without video), not
+// category content, so it doesn't belong in the shared data model per the
+// site's own "don't hardcode content into a page, don't decorate the data
+// model" split.
+const HOME_CARD_VIDEOS: Record<string, string> = {
+  'pressure-washing': '/videos/pressure-washing-card-bg.mp4',
+  'material-handling': '/videos/material-handling-card-bg.mp4',
+}
+
 export default function Home() {
   return (
     <div>
@@ -96,7 +107,7 @@ export default function Home() {
 
         <div className="grid gap-6 sm:grid-cols-2">
           {equipmentCategories.map((c) => (
-            <CategoryCard key={c.slug} category={c} />
+            <CategoryCard key={c.slug} category={c} videoSrc={HOME_CARD_VIDEOS[c.slug]} />
           ))}
         </div>
 

@@ -98,6 +98,11 @@ body {
   border-radius: 9999px;
   background: var(--color-orange-500);
   top: 8px;
+  /* Explicit z-index (rather than relying on paint order) guarantees the
+     rivets stay above a card's own children regardless of DOM order —
+     needed once CategoryCard started layering a background video + scrim
+     as children of a spec-plate panel. */
+  z-index: 2;
 }
 .spec-plate::before {
   left: 8px;

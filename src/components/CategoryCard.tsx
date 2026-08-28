@@ -1,26 +1,83 @@
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import type { EquipmentCategory } from '../data/equipmentCategories'
 import { SpecPlate } from './SpecPlate'
 
-export default function CategoryCard({ category }: { category: EquipmentCategory }) {
+// WCAG 2.2.2 (Pause, Stop, Hide): a purely decorative autoplaying video
+// that loops longer than 5s needs a way to not auto-play for visitors who
+// have asked for reduced motion. Simplest correct fix — don't mount the
+// video at all for them; the card still renders (dark scrim, no motion)
+// rather than going dark-on-nothing.
+function usePrefersReducedMotion() {
+  const [reduced, setReduced] = useState(false)
+  useEffect(() => {
+    const query = window.matchMedia('(prefers-reduced-motion: reduce)')
+    setReduced(query.matches)
+    const onChange = () => setReduced(query.matches)
+    query.addEventListener('change', onChange)
+    return () => query.removeEventListener('change', onChange)
+  }, [])
+  return reduced
+}
+
+export default function CategoryCard({
+  category,
+  videoSrc,
+}: {
+  category: EquipmentCategory
+  videoSrc?: string
+}) {
   const isActive = category.status === 'active'
+  const hasVideo = Boolean(videoSrc)
+  const prefersReducedMotion = usePrefersReducedMotion()
 
   return (
-    <SpecPlate tone="light" className="flex flex-col">
-      <div className="flex items-start justify-between gap-3">
-        <h3 className="font-display text-2xl font-bold uppercase text-steel-900">{category.name}</h3>
-        <StatusBadge status={category.status} tone="light" />
+    <SpecPlate tone={hasVideo ? 'dark' : 'light'} className="relative flex flex-col overflow-hidden">
+      {hasVideo && (
+        <>
+          {/* Purely decorative ambient loop — conveys no information beyond
+              what the text already states, so aria-hidden with no
+              captions/alt is correct here. */}
+          {!prefersReducedMotion && (
+            <video
+              className="absolute inset-0 h-full w-full object-cover"
+              src={videoSrc}
+              autoPlay
+              muted
+              loop
+              playsInline
+              aria-hidden="true"
+            />
+          )}
+          {/* Scrim keeps text at the same verified contrast as every other
+              dark-tone panel on the site, regardless of what's in the
+              footage underneath. */}
+          <div className="absolute inset-0 bg-steel-900/70" aria-hidden="true" />
+        </>
+      )}
+
+      <div className="relative flex flex-1 flex-col">
+        <div className="flex items-start justify-between gap-3">
+          <h3 className={`font-display text-2xl font-bold uppercase ${hasVideo ? 'text-cold-50' : 'text-steel-900'}`}>
+            {category.name}
+          </h3>
+          <StatusBadge status={category.status} tone={hasVideo ? 'dark' : 'light'} />
+        </div>
+        <p className={`mt-2 flex-1 text-sm leading-relaxed ${hasVideo ? 'text-gauge-300' : 'text-steel-700'}`}>
+          {category.description}
+        </p>
+        <p className={`mt-4 font-mono text-xs uppercase tracking-widest ${hasVideo ? 'text-gauge-400' : 'text-gauge-600'}`}>
+          {category.subcategories.length} Equipment Types
+        </p>
+        <Link
+          to={`/equipment/${category.slug}`}
+          className={`mt-3 inline-block font-display text-lg uppercase tracking-wide ${
+            hasVideo ? 'text-orange-400 hover:text-orange-300' : 'text-hydro-500 hover:text-hydro-400'
+          }`}
+        >
+          {isActive ? 'View Category →' : 'Learn More →'}
+        </Link>
       </div>
-      <p className="mt-2 flex-1 text-sm leading-relaxed text-steel-700">{category.description}</p>
-      <p className="mt-4 font-mono text-xs uppercase tracking-widest text-gauge-600">
-        {category.subcategories.length} Equipment Types
-      </p>
-      <Link
-        to={`/equipment/${category.slug}`}
-        className="mt-3 inline-block font-display text-lg uppercase tracking-wide text-hydro-500 hover:text-hydro-400"
-      >
-        {isActive ? 'View Category →' : 'Learn More →'}
-      </Link>
     </SpecPlate>
   )
 }
