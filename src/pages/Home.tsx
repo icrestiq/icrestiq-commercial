@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom'
 import { SpecPlate, SpecRow } from '../components/SpecPlate'
 import CategoryCard from '../components/CategoryCard'
 import { equipmentCategories } from '../data/equipmentCategories'
+import { usePrefersReducedMotion } from '../hooks/usePrefersReducedMotion'
 
 // Homepage-only decoration — deliberately not part of the equipmentCategories
 // data model. This is a presentation choice for this one page (Equipment.tsx
@@ -15,10 +16,26 @@ const HOME_CARD_VIDEOS: Record<string, string> = {
 }
 
 export default function Home() {
+  const prefersReducedMotion = usePrefersReducedMotion()
+
   return (
     <div>
       {/* Hero */}
       <section className="relative overflow-hidden border-b border-steel-700 bg-steel-900">
+        {!prefersReducedMotion && (
+          <video
+            className="absolute inset-0 h-full w-full object-cover"
+            src="/videos/home-hero-bg.mp4"
+            autoPlay
+            muted
+            loop
+            playsInline
+            aria-hidden="true"
+          />
+        )}
+        {/* Scrim keeps the hero's white/orange text at the same verified
+            contrast it already had against a flat steel-900 background. */}
+        <div className="absolute inset-0 bg-steel-900/70" aria-hidden="true" />
         <svg
           className="pointer-events-none absolute -right-24 top-0 h-full w-1/2 opacity-[0.07]"
           viewBox="0 0 400 400"

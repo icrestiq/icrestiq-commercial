@@ -1,24 +1,7 @@
-import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import type { EquipmentCategory } from '../data/equipmentCategories'
 import { SpecPlate } from './SpecPlate'
-
-// WCAG 2.2.2 (Pause, Stop, Hide): a purely decorative autoplaying video
-// that loops longer than 5s needs a way to not auto-play for visitors who
-// have asked for reduced motion. Simplest correct fix — don't mount the
-// video at all for them; the card still renders (dark scrim, no motion)
-// rather than going dark-on-nothing.
-function usePrefersReducedMotion() {
-  const [reduced, setReduced] = useState(false)
-  useEffect(() => {
-    const query = window.matchMedia('(prefers-reduced-motion: reduce)')
-    setReduced(query.matches)
-    const onChange = () => setReduced(query.matches)
-    query.addEventListener('change', onChange)
-    return () => query.removeEventListener('change', onChange)
-  }, [])
-  return reduced
-}
+import { usePrefersReducedMotion } from '../hooks/usePrefersReducedMotion'
 
 export default function CategoryCard({
   category,
