@@ -78,9 +78,14 @@ Never store passwords, API keys, access tokens, credentials, private authenticat
     placeholder, but DNS/Vercel domain attachment may not be done yet; check
     `Project Status.md` for current deployment state.
   - Do not add a catch-all SPA-fallback rewrite (e.g. a `vercel.json` rule
-    routing every path to `/index.html`) when deploying — it would defeat
-    this work by serving the wrong content for every prerendered route.
-    `dist/404.html` is the intended fallback for genuinely unknown paths.
+    routing every path to `/index.html`) — it would defeat this work by
+    serving the wrong content for every prerendered route. `dist/404.html`
+    is the intended fallback for genuinely unknown paths. `vercel.json`
+    (added 2026-08-28, live now) rewrites *only* `/admin` and
+    `/admin/(.*)` to `/index.html` — `/admin` is never prerendered, so
+    without this it 404s (harmlessly, since `404.html` carries the same JS
+    bundle and client-side routing still recovers, but under the wrong HTTP
+    status). Keep this rewrite scoped exactly to `/admin` — do not widen it.
 
 ## Accessibility and Legal Policies (do not regress these)
 
