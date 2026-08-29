@@ -22,6 +22,13 @@ import { facilityMaintenance } from './facilityMaintenance'
 import { concreteCleaning } from './concreteCleaning'
 import { bestForFleetWashing } from './bestForFleetWashing'
 import { industrialVsResidential } from './industrialVsResidential'
+import { agriculture } from './agriculture'
+import { foodProcessing } from './foodProcessing'
+import { truckWashing } from './truckWashing'
+import { industrialEquipmentCleaning } from './industrialEquipmentCleaning'
+import { maintenance } from './maintenance'
+import { waterRecoveryRequirements } from './waterRecoveryRequirements'
+import { governmentProcurement } from './governmentProcurement'
 import type { ResourcePage } from './types'
 
 export type { Block, ResourcePage, ResourceType, RelatedLink } from './types'
@@ -56,6 +63,13 @@ export const pressureWashingResources: ResourcePage[] = [
   concreteCleaning,
   bestForFleetWashing,
   industrialVsResidential,
+  agriculture,
+  foodProcessing,
+  truckWashing,
+  industrialEquipmentCleaning,
+  maintenance,
+  waterRecoveryRequirements,
+  governmentProcurement,
 ]
 
 export function getResourceBySlug(slug: string | undefined): ResourcePage | undefined {
