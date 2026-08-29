@@ -86,6 +86,35 @@ Never store passwords, API keys, access tokens, credentials, private authenticat
     without this it 404s (harmlessly, since `404.html` carries the same JS
     bundle and client-side routing still recovers, but under the wrong HTTP
     status). Keep this rewrite scoped exactly to `/admin` — do not widen it.
+- **SEO content system + blog CMS (scoped 2026-08-28, NOT built yet — do not
+  start without checking `Project Status.md` for current state first):**
+  SEO is meant to be core platform architecture, not an afterthought — see
+  "SEO Content System & Blog Platform" in the vault's `iCrestiQ
+  Commercial.md` for the full durable requirement (four content types, the
+  30-page initial roadmap, rollout phases) and "SEO content system + blog
+  CMS scoped" in `Decisions.md` for the GovCon Lab inspection findings and
+  proposed technical approach. Key constraint already decided: GovCon Lab's
+  blog editor pattern (plain textarea + paste-to-lightweight-markdown
+  converter, no WYSIWYG library, no stored-HTML security surface) should be
+  reused, but GovCon Lab's blog *SEO delivery* (client-only, `document.title`
+  mutated post-mount) must NOT be reused — it defeats the exact problem this
+  site's prerender pipeline exists to solve. Blog posts need their own
+  serverless SSR route (published independently of deploys, can't go through
+  the build-time prerender script); the 30 static pillar/application/guide
+  pages go through the existing `seo.ts`/`prerender.mjs` pipeline like any
+  other page. **URL namespace resolved 2026-08-28:** everything (core/
+  application/guide pages, plus the buyer-resource tools scoped earlier
+  the same session) lives under `/equipment/pressure-washing/...` — the
+  original request's flat `/pressure-washing/...`/`/guides/...` suggestion
+  was explicitly superseded by the user in favor of one shared namespace.
+  Claude is treating buying guide #23 ("PSI vs GPM") and the interactive
+  PSI/GPM chart tool as the same page — an inference, not yet confirmed by
+  the user, check `Decisions.md` before assuming this is settled.
+  **Blog crawlability resolved 2026-08-28:** the serverless SSR route
+  above should be edge-cached (`s-maxage`/`stale-while-revalidate`), and
+  `sitemap.xml` needs a dynamic component for blog posts (the current one
+  is a static build-time file). Still not built — wait for explicit
+  go-ahead before writing any of this code.
 
 ## Accessibility and Legal Policies (do not regress these)
 

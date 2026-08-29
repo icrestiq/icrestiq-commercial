@@ -4,6 +4,8 @@ import Layout from './components/Layout'
 import Home from './pages/Home'
 import Equipment from './pages/Equipment'
 import EquipmentCategory from './pages/EquipmentCategory'
+import ResourcePage from './pages/ResourcePage'
+import PressureWashingSelector from './pages/PressureWashingSelector'
 import GovernmentSales from './pages/GovernmentSales'
 import RequestQuote from './pages/RequestQuote'
 import About from './pages/About'
@@ -42,6 +44,8 @@ export default function App() {
       <Route element={<Layout />}>
         <Route path="/" element={<Home />} />
         <Route path="/equipment" element={<Equipment />} />
+        <Route path="/equipment/pressure-washing/selector" element={<PressureWashingSelector />} />
+        <Route path="/equipment/pressure-washing/:slug" element={<ResourcePage />} />
         <Route path="/equipment/:slug" element={<EquipmentCategory />} />
         <Route path="/government" element={<GovernmentSales />} />
         <Route path="/quote" element={<RequestQuote />} />

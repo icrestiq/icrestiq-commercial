@@ -1,4 +1,5 @@
 import { useRef, useState, type FormEvent, type ReactNode } from 'react'
+import { useSearchParams } from 'react-router-dom'
 import { SpecPlate } from '../components/SpecPlate'
 import { equipmentCategories } from '../data/equipmentCategories'
 import Turnstile, { type TurnstileHandle } from '../components/Turnstile'
@@ -38,8 +39,27 @@ const initialState: FormState = {
   details: '',
 }
 
+// Every valid value the equipment <select> can hold, so a query param can't
+// inject an option that doesn't exist in the dropdown (e.g. from a stale or
+// hand-edited link) — falls back to OTHER_OPTION if it doesn't match.
+const KNOWN_EQUIPMENT = new Set(
+  equipmentCategories.flatMap((c) => c.subcategories.map((s) => s.name)).concat(OTHER_OPTION),
+)
+
+// SEO resource pages and the equipment selector link here with
+// ?equipment=<name> (see src/data/resources and PressureWashingSelector.tsx)
+// so a visitor who already got a recommendation doesn't have to re-pick it.
+function initialEquipmentFrom(searchParams: URLSearchParams): string {
+  const requested = searchParams.get('equipment')
+  return requested && KNOWN_EQUIPMENT.has(requested) ? requested : OTHER_OPTION
+}
+
 export default function RequestQuote() {
-  const [form, setForm] = useState<FormState>(initialState)
+  const [searchParams] = useSearchParams()
+  const [form, setForm] = useState<FormState>(() => ({
+    ...initialState,
+    equipment: initialEquipmentFrom(searchParams),
+  }))
   const [sent, setSent] = useState(false)
   const [submitting, setSubmitting] = useState(false)
   const [failed, setFailed] = useState(false)

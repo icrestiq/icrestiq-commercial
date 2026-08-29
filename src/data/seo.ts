@@ -1,5 +1,6 @@
 import { equipmentCategories } from './equipmentCategories'
 import { POLICIES } from './policies'
+import { pressureWashingResources } from './resources'
 
 // Real domain, purchased 2026-08-28. Used for canonical URLs, Open Graph/
 // Twitter absolute URLs, and sitemap.xml. Still needs DNS pointed at the
@@ -75,7 +76,28 @@ const policyRoutes: RouteMeta[] = POLICIES.map((p) => ({
   description: p.summary,
 }))
 
-export const routeMeta: RouteMeta[] = [...staticRoutes, ...categoryRoutes, ...policyRoutes]
+const resourceRoutes: RouteMeta[] = pressureWashingResources.map((r) => ({
+  path: `/equipment/pressure-washing/${r.slug}`,
+  title: r.metaTitle,
+  description: r.metaDescription,
+}))
+
+const toolRoutes: RouteMeta[] = [
+  {
+    path: '/equipment/pressure-washing/selector',
+    title: 'Pressure Washer Equipment Selector | iCrestiQ Commercial',
+    description:
+      'Answer four quick questions and get a recommended commercial pressure washer type, matched to your application, duty cycle, and job-site needs — then request a scoped quote.',
+  },
+]
+
+export const routeMeta: RouteMeta[] = [
+  ...staticRoutes,
+  ...categoryRoutes,
+  ...policyRoutes,
+  ...resourceRoutes,
+  ...toolRoutes,
+]
 
 export const notFoundMeta: RouteMeta = {
   path: '/404',

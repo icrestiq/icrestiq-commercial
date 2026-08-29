@@ -2,6 +2,7 @@ import { Link, useParams } from 'react-router-dom'
 import { SpecPlate, SpecRow } from '../components/SpecPlate'
 import { StatusBadge } from '../components/CategoryCard'
 import { getCategoryBySlug } from '../data/equipmentCategories'
+import { pressureWashingResources } from '../data/resources'
 
 export default function EquipmentCategory() {
   const { slug } = useParams<{ slug: string }>()
@@ -76,6 +77,34 @@ export default function EquipmentCategory() {
               </li>
             ))}
           </ul>
+        </section>
+      )}
+
+      {category.slug === 'pressure-washing' && (
+        <section className="border-t border-gauge-300/40 bg-cold-100 px-6 py-16">
+          <div className="mx-auto max-w-6xl">
+            <p className="font-mono text-xs uppercase tracking-[0.2em] text-orange-600">Buyer Resources</p>
+            <h2 className="mt-2 font-display text-3xl font-bold uppercase text-steel-900">
+              Not Sure Which System You Need?
+            </h2>
+            <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              <Link
+                to="/equipment/pressure-washing/selector"
+                className="border border-orange-500 bg-cold-50 px-5 py-4 font-display text-lg uppercase tracking-wide text-steel-900 transition-colors hover:bg-orange-600 hover:text-cold-50"
+              >
+                Equipment Selector Tool →
+              </Link>
+              {pressureWashingResources.map((r) => (
+                <Link
+                  key={r.slug}
+                  to={`/equipment/pressure-washing/${r.slug}`}
+                  className="border border-gauge-300 bg-cold-50 px-5 py-4 font-display text-lg uppercase tracking-wide text-steel-900 transition-colors hover:border-orange-500"
+                >
+                  {r.label} →
+                </Link>
+              ))}
+            </div>
+          </div>
         </section>
       )}
 
