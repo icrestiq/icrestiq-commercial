@@ -8,6 +8,13 @@ import { stationary } from './stationary'
 import { waterRecovery } from './waterRecovery'
 import { trailerVsSkid } from './trailerVsSkid'
 import { fleetWashing } from './fleetWashing'
+import { industrial } from './industrial'
+import { surfaceCleaner } from './surfaceCleaner'
+import { accessories } from './accessories'
+import { whatSize } from './whatSize'
+import { cost } from './cost'
+import { greaseAndOil } from './greaseAndOil'
+import { buyingGuide } from './buyingGuide'
 import type { ResourcePage } from './types'
 
 export type { Block, ResourcePage, ResourceType, RelatedLink } from './types'
@@ -28,6 +35,13 @@ export const pressureWashingResources: ResourcePage[] = [
   waterRecovery,
   trailerVsSkid,
   fleetWashing,
+  industrial,
+  surfaceCleaner,
+  accessories,
+  whatSize,
+  cost,
+  greaseAndOil,
+  buyingGuide,
 ]
 
 export function getResourceBySlug(slug: string | undefined): ResourcePage | undefined {

@@ -2,7 +2,30 @@ import { Link, useParams } from 'react-router-dom'
 import { SpecPlate, SpecRow } from '../components/SpecPlate'
 import { StatusBadge } from '../components/CategoryCard'
 import { getCategoryBySlug } from '../data/equipmentCategories'
-import { pressureWashingResources } from '../data/resources'
+import { pressureWashingResources, type ResourceType } from '../data/resources'
+
+const GROUP_LABEL: Record<ResourceType, string> = {
+  core: 'Core Equipment',
+  application: 'By Application',
+  guide: 'Buying Guides',
+}
+const GROUP_ORDER: ResourceType[] = ['core', 'application', 'guide']
+
+function ResourceCard({ to, label, interactive }: { to: string; label: string; interactive?: boolean }) {
+  return (
+    <Link
+      to={to}
+      className="group flex flex-col gap-1.5 border border-gauge-300 bg-cold-50 px-5 py-4 font-display text-lg uppercase tracking-wide text-steel-900 transition-colors hover:border-orange-500"
+    >
+      {interactive && (
+        <span className="w-fit border border-orange-600 px-1.5 py-0.5 font-mono text-[10px] tracking-widest text-orange-600">
+          Interactive Tool
+        </span>
+      )}
+      {label} →
+    </Link>
+  )
+}
 
 export default function EquipmentCategory() {
   const { slug } = useParams<{ slug: string }>()
@@ -87,7 +110,7 @@ export default function EquipmentCategory() {
             <h2 className="mt-2 font-display text-3xl font-bold uppercase text-steel-900">
               Not Sure Which System You Need?
             </h2>
-            <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="mt-6">
               <Link
                 to="/equipment/pressure-washing/selector"
                 className="group flex flex-col gap-1.5 border border-orange-500 bg-cold-50 px-5 py-4 font-display text-lg uppercase tracking-wide text-steel-900 transition-colors hover:bg-orange-600 hover:text-cold-50"
@@ -97,21 +120,27 @@ export default function EquipmentCategory() {
                 </span>
                 Equipment Selector Tool →
               </Link>
-              {pressureWashingResources.map((r) => (
-                <Link
-                  key={r.slug}
-                  to={`/equipment/pressure-washing/${r.slug}`}
-                  className="flex flex-col gap-1.5 border border-gauge-300 bg-cold-50 px-5 py-4 font-display text-lg uppercase tracking-wide text-steel-900 transition-colors hover:border-orange-500"
-                >
-                  {r.interactive && (
-                    <span className="w-fit border border-orange-600 px-1.5 py-0.5 font-mono text-[10px] tracking-widest text-orange-600">
-                      Interactive Tool
-                    </span>
-                  )}
-                  {r.label} →
-                </Link>
-              ))}
             </div>
+
+            {GROUP_ORDER.map((type) => {
+              const items = pressureWashingResources.filter((r) => r.type === type)
+              if (items.length === 0) return null
+              return (
+                <div key={type} className="mt-10 first:mt-8">
+                  <p className="font-mono text-xs uppercase tracking-widest text-gauge-600">{GROUP_LABEL[type]}</p>
+                  <div className="mt-3 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                    {items.map((r) => (
+                      <ResourceCard
+                        key={r.slug}
+                        to={`/equipment/pressure-washing/${r.slug}`}
+                        label={r.label}
+                        interactive={r.interactive}
+                      />
+                    ))}
+                  </div>
+                </div>
+              )
+            })}
           </div>
         </section>
       )}
