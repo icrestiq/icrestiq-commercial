@@ -15,6 +15,13 @@ import { whatSize } from './whatSize'
 import { cost } from './cost'
 import { greaseAndOil } from './greaseAndOil'
 import { buyingGuide } from './buyingGuide'
+import { heavyEquipment } from './heavyEquipment'
+import { constructionEquipment } from './constructionEquipment'
+import { publicWorks } from './publicWorks'
+import { facilityMaintenance } from './facilityMaintenance'
+import { concreteCleaning } from './concreteCleaning'
+import { bestForFleetWashing } from './bestForFleetWashing'
+import { industrialVsResidential } from './industrialVsResidential'
 import type { ResourcePage } from './types'
 
 export type { Block, ResourcePage, ResourceType, RelatedLink } from './types'
@@ -42,6 +49,13 @@ export const pressureWashingResources: ResourcePage[] = [
   cost,
   greaseAndOil,
   buyingGuide,
+  heavyEquipment,
+  constructionEquipment,
+  publicWorks,
+  facilityMaintenance,
+  concreteCleaning,
+  bestForFleetWashing,
+  industrialVsResidential,
 ]
 
 export function getResourceBySlug(slug: string | undefined): ResourcePage | undefined {
