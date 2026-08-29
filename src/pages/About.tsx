@@ -8,7 +8,7 @@ export default function About() {
         <div className="mx-auto max-w-4xl">
           <p className="font-mono text-xs uppercase tracking-[0.2em] text-orange-400">About Us</p>
           <h1 className="mt-3 font-display text-5xl font-extrabold uppercase text-cold-50">
-            iCrestiQ <span className="text-orange-500">Commercial</span>
+            iCrest<span className="text-orange-500">i</span>Q <span className="text-orange-500">Commercial</span>
           </h1>
           <p className="mt-4 text-lg leading-relaxed text-gauge-300">
             iCrestiQ Commercial is the commercial equipment sales division of iCrestiQ LLC, a
