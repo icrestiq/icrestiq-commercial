@@ -13,6 +13,7 @@ export const psiGpm: ResourcePage = {
   metaDescription:
     'PSI and GPM do different jobs on a pressure washer — PSI breaks bonded dirt loose, GPM rinses it away. Use the interactive chart to see which PSI/GPM range fits your application.',
   eyebrow: 'Buying Guide',
+  interactive: true,
   intro:
     "PSI and GPM get talked about like one number, but they measure two different things. PSI (pounds per square inch) is the force that breaks dirt loose from a surface. GPM (gallons per minute) is how much water carries that dirt away and covers ground while doing it. A spec sheet with high PSI and low GPM cleans differently than one with the reverse — matching both to your actual job matters more than maximizing either one.",
   blocks: [

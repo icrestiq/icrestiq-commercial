@@ -45,4 +45,8 @@ export interface ResourcePage {
   /** Equipment-category value to pre-select on the quote form's CTA. */
   ctaEquipment?: string
   relatedSlugs?: string[]
+  /** True when the page embeds a hands-on interactive tool (e.g. the
+      PSI/GPM sliders), not just static content — surfaced as a badge
+      wherever this page is linked from a card grid. */
+  interactive?: boolean
 }

@@ -4,6 +4,7 @@ import logo from '../assets/brand/logo-lockup-header.png'
 
 const links = [
   { to: '/equipment', label: 'Equipment' },
+  { to: '/equipment/pressure-washing#buyer-resources', label: 'Resources' },
   { to: '/government', label: 'Government & Institutional' },
   { to: '/about', label: 'About' },
   { to: '/contact', label: 'Contact' },
