@@ -9,6 +9,7 @@ export const concreteCleaning: ResourcePage = {
   metaDescription:
     'Equipment guidance for cleaning concrete surfaces — parking lots, warehouse floors, and sidewalks — including why higher PSI can damage concrete if it\'s not matched to the job.',
   eyebrow: 'Application',
+  typicalBuyers: ['Contractor', 'Facilities / Property Management', 'Government / Institutional'],
   intro:
     "Concrete is forgiving compared to painted or delicate surfaces, but it's not infinitely so — too much PSI at close range can etch or pit concrete, and large concrete areas clean far more efficiently with the right attachment than a bare wand.",
   blocks: [

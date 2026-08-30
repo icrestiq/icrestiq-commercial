@@ -9,6 +9,7 @@ export const foodProcessing: ResourcePage = {
   metaDescription:
     'Equipment guidance for food processing and food-service facility washdown — frequent sanitation cycles, grease and protein residue, and fixed installations.',
   eyebrow: 'Application',
+  typicalBuyers: ['Facilities / Property Management'],
   intro:
     "Food processing washdown happens often, needs to actually sanitize (not just rinse), and regularly deals with grease and protein residue that cold water won't touch — hot water is close to a default requirement here, not an option to weigh.",
   blocks: [

@@ -9,6 +9,7 @@ export const publicWorks: ResourcePage = {
   metaDescription:
     'Equipment guidance for municipal and public works pressure washing — sidewalks, municipal vehicle fleets, and public facility maintenance, including government procurement.',
   eyebrow: 'Application',
+  typicalBuyers: ['Government / Institutional'],
   intro:
     "Public works covers a wide range in one department — municipal vehicle fleets, sidewalks and public spaces, facility maintenance — and often comes with procurement requirements standard commercial buyers don't deal with.",
   blocks: [
@@ -37,6 +38,6 @@ export const publicWorks: ResourcePage = {
       ],
     },
   ],
-  ctaEquipment: 'Not sure / need guidance',
+  ctaEquipment: 'Cold Water Pressure Washers',
   relatedSlugs: ['fleet-washing', 'surface-cleaners', 'facility-maintenance'],
 }

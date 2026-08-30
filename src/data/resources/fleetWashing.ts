@@ -9,6 +9,7 @@ export const fleetWashing: ResourcePage = {
   metaDescription:
     'Equipment guidance for commercial fleet washing — exteriors, engine bays, and undercarriages — including which pressure washer type and PSI/GPM range fits daily fleet operations.',
   eyebrow: 'Application',
+  typicalBuyers: ['Contractor', 'Facilities / Property Management', 'Government / Institutional'],
   intro:
     "Fleet washing usually means two different jobs wearing one name: exterior washing, where cold water and volume do the work, and engine bay/undercarriage cleaning, where grease and oil need hot water to actually break down. Sizing for one and expecting it to handle both is the most common mismatch we see.",
   blocks: [

@@ -9,6 +9,7 @@ export const industrialEquipmentCleaning: ResourcePage = {
   metaDescription:
     'Equipment guidance for cleaning fixed industrial machinery — production lines, tanks, and processing equipment — as distinct from mobile heavy equipment or facility floors.',
   eyebrow: 'Application',
+  typicalBuyers: ['Facilities / Property Management'],
   intro:
     "This is about cleaning the machinery itself — production line equipment, tanks, processing gear fixed inside a facility — not the mobile heavy equipment covered on our Heavy Equipment Cleaning page or the building/floor cleaning covered under Facility Maintenance.",
   blocks: [
@@ -36,6 +37,6 @@ export const industrialEquipmentCleaning: ResourcePage = {
       ],
     },
   ],
-  ctaEquipment: 'Not sure / need guidance',
+  ctaEquipment: 'Hot Water Pressure Washers',
   relatedSlugs: ['industrial', 'stationary-systems', 'grease-and-oil'],
 }

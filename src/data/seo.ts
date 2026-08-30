@@ -89,6 +89,12 @@ const toolRoutes: RouteMeta[] = [
     description:
       'Answer four quick questions and get a recommended commercial pressure washer type, matched to your application, duty cycle, and job-site needs — then request a scoped quote.',
   },
+  {
+    path: '/equipment/pressure-washing/application-matrix',
+    title: 'Application Matrix | iCrestiQ Commercial',
+    description:
+      'Every common commercial pressure-washing task, who typically runs into it, and the equipment category to start with — one lookup table linking to the full guide for each.',
+  },
 ]
 
 export const routeMeta: RouteMeta[] = [

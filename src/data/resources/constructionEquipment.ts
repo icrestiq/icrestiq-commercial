@@ -9,6 +9,7 @@ export const constructionEquipment: ResourcePage = {
   metaDescription:
     'Equipment guidance for washing construction machinery and job-site vehicles — mobile rigs that travel between sites, mostly dirt and concrete rather than grease.',
   eyebrow: 'Application',
+  typicalBuyers: ['Contractor'],
   intro:
     "Construction equipment cleaning is usually a mobility problem more than a cleaning-power problem — the machinery is at the job site, not at a wash bay, and the mess is mostly mud, dirt, and dried concrete rather than grease.",
   blocks: [

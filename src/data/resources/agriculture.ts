@@ -9,6 +9,7 @@ export const agriculture: ResourcePage = {
   metaDescription:
     'Equipment guidance for agricultural and livestock facility washdown — barns, milking parlors, and equipment, where sanitation and water recovery both matter.',
   eyebrow: 'Application',
+  typicalBuyers: ['Contractor', 'Facilities / Property Management'],
   intro:
     "Agricultural washdown covers a lot of ground — livestock facilities, milking parlors, equipment yards — and often combines sanitation requirements with heavy organic soil, which points toward hot water and a real plan for runoff.",
   blocks: [
@@ -37,6 +38,6 @@ export const agriculture: ResourcePage = {
       ],
     },
   ],
-  ctaEquipment: 'Not sure / need guidance',
+  ctaEquipment: 'Hot Water Pressure Washers',
   relatedSlugs: ['hot-water', 'water-recovery', 'stationary-systems'],
 }

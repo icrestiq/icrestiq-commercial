@@ -110,7 +110,7 @@ export default function EquipmentCategory() {
             <h2 className="mt-2 font-display text-3xl font-bold uppercase text-steel-900">
               Not Sure Which System You Need?
             </h2>
-            <div className="mt-6">
+            <div className="mt-6 grid gap-4 sm:grid-cols-2">
               <Link
                 to="/equipment/pressure-washing/selector"
                 className="group flex flex-col gap-1.5 border border-orange-500 bg-cold-50 px-5 py-4 font-display text-lg uppercase tracking-wide text-steel-900 transition-colors hover:bg-orange-600 hover:text-cold-50"
@@ -119,6 +119,12 @@ export default function EquipmentCategory() {
                   Interactive Tool
                 </span>
                 Equipment Selector Tool →
+              </Link>
+              <Link
+                to="/equipment/pressure-washing/application-matrix"
+                className="flex flex-col gap-1.5 border border-gauge-300 bg-cold-50 px-5 py-4 font-display text-lg uppercase tracking-wide text-steel-900 transition-colors hover:border-orange-500"
+              >
+                Application Matrix →
               </Link>
             </div>
 

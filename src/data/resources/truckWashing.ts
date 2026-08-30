@@ -9,6 +9,7 @@ export const truckWashing: ResourcePage = {
   metaDescription:
     'Equipment guidance for washing trucks and tractor-trailers — large surface area, DOT appearance standards, and depot or wash-bay operations.',
   eyebrow: 'Application',
+  typicalBuyers: ['Contractor', 'Government / Institutional'],
   intro:
     "Trucks and tractor-trailers bring one factor smaller fleet vehicles don't: sheer surface area. GPM does a lot of the work here — covering a trailer's flat sides efficiently matters as much as pressure for baked-on grime.",
   blocks: [
@@ -36,6 +37,6 @@ export const truckWashing: ResourcePage = {
       ],
     },
   ],
-  ctaEquipment: 'Not sure / need guidance',
+  ctaEquipment: 'Cold Water Pressure Washers',
   relatedSlugs: ['stationary-systems', 'fleet-washing', 'psi-gpm-guide'],
 }

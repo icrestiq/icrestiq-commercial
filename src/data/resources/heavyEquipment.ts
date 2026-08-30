@@ -9,6 +9,7 @@ export const heavyEquipment: ResourcePage = {
   metaDescription:
     'Equipment guidance for cleaning heavy machinery — undercarriages, tracks, and engine compartments where baked-on grease, mud, and hydraulic fluid all show up on the same job.',
   eyebrow: 'Application',
+  typicalBuyers: ['Contractor', 'Government / Institutional'],
   intro:
     "Heavy equipment brings three problems to the same wash: baked-on grease and hydraulic fluid, packed mud and debris in tracks and undercarriages, and enough surface area that GPM matters as much as PSI. It's one of the more demanding applications on this site.",
   blocks: [

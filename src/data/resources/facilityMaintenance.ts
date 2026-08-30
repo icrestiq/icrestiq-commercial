@@ -9,6 +9,7 @@ export const facilityMaintenance: ResourcePage = {
   metaDescription:
     'Equipment guidance for routine facility and building exterior maintenance — entryways, walkways, loading docks, and general upkeep for property and facilities teams.',
   eyebrow: 'Application',
+  typicalBuyers: ['Facilities / Property Management'],
   intro:
     "Facility maintenance is usually routine, recurring work — building exteriors, entryways, walkways, loading docks — where reliability and low running cost matter more than raw capability.",
   blocks: [

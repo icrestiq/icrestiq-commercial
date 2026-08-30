@@ -49,4 +49,9 @@ export interface ResourcePage {
       PSI/GPM sliders), not just static content — surfaced as a badge
       wherever this page is linked from a card grid. */
   interactive?: boolean
+  /** Application-type pages only: which buyer type(s) most commonly
+      encounter this task — informational only, doesn't change the
+      recommended equipment (confirmed with the user: the recommendation
+      is purely task-driven). Powers the Application Matrix lookup table. */
+  typicalBuyers?: string[]
 }

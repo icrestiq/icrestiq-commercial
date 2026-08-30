@@ -6,6 +6,7 @@ import Equipment from './pages/Equipment'
 import EquipmentCategory from './pages/EquipmentCategory'
 import ResourcePage from './pages/ResourcePage'
 import PressureWashingSelector from './pages/PressureWashingSelector'
+import ApplicationMatrix from './pages/ApplicationMatrix'
 import GovernmentSales from './pages/GovernmentSales'
 import RequestQuote from './pages/RequestQuote'
 import About from './pages/About'
@@ -45,6 +46,7 @@ export default function App() {
         <Route path="/" element={<Home />} />
         <Route path="/equipment" element={<Equipment />} />
         <Route path="/equipment/pressure-washing/selector" element={<PressureWashingSelector />} />
+        <Route path="/equipment/pressure-washing/application-matrix" element={<ApplicationMatrix />} />
         <Route path="/equipment/pressure-washing/:slug" element={<ResourcePage />} />
         <Route path="/equipment/:slug" element={<EquipmentCategory />} />
         <Route path="/government" element={<GovernmentSales />} />
