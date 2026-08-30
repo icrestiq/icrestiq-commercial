@@ -29,6 +29,18 @@ export default function GovernmentSales() {
               pressure washing systems and expanding into additional equipment categories
               over time.
             </p>
+            <p className="mt-3 max-w-xl text-sm text-gauge-400">
+              Looking to learn government contracting yourself? Visit{' '}
+              <a
+                href="https://govconlab.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline hover:text-orange-400"
+              >
+                GovCon Lab
+              </a>
+              , iCrestiQ's government contracting education and training platform.
+            </p>
             <a
               href="/iCrestiQ-Capabilities-Statement.pdf"
               className="mt-6 inline-block border border-orange-500 px-6 py-3 font-display text-lg uppercase tracking-wide text-orange-400 transition-colors hover:bg-cold-50 hover:text-steel-900"
