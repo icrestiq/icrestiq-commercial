@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom'
 import type { EquipmentCategory } from '../data/equipmentCategories'
 import { SpecPlate } from './SpecPlate'
 import { usePrefersReducedMotion } from '../hooks/usePrefersReducedMotion'
+import { usePageLoaded } from '../hooks/usePageLoaded'
 
 export default function CategoryCard({
   category,
@@ -13,6 +14,7 @@ export default function CategoryCard({
   const isActive = category.status === 'active'
   const hasVideo = Boolean(videoSrc)
   const prefersReducedMotion = usePrefersReducedMotion()
+  const pageLoaded = usePageLoaded()
 
   return (
     <SpecPlate tone={hasVideo ? 'dark' : 'light'} className="relative flex flex-col overflow-hidden">
@@ -21,7 +23,7 @@ export default function CategoryCard({
           {/* Purely decorative ambient loop — conveys no information beyond
               what the text already states, so aria-hidden with no
               captions/alt is correct here. */}
-          {!prefersReducedMotion && (
+          {pageLoaded && !prefersReducedMotion && (
             <video
               className="absolute inset-0 h-full w-full object-cover"
               src={videoSrc}

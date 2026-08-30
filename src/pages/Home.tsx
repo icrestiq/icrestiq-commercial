@@ -3,6 +3,7 @@ import { SpecPlate, SpecRow } from '../components/SpecPlate'
 import CategoryCard from '../components/CategoryCard'
 import { equipmentCategories } from '../data/equipmentCategories'
 import { usePrefersReducedMotion } from '../hooks/usePrefersReducedMotion'
+import { usePageLoaded } from '../hooks/usePageLoaded'
 
 // Homepage-only decoration — deliberately not part of the equipmentCategories
 // data model. This is a presentation choice for this one page (Equipment.tsx
@@ -17,12 +18,13 @@ const HOME_CARD_VIDEOS: Record<string, string> = {
 
 export default function Home() {
   const prefersReducedMotion = usePrefersReducedMotion()
+  const pageLoaded = usePageLoaded()
 
   return (
     <div>
       {/* Hero */}
       <section className="relative overflow-hidden border-b border-steel-700 bg-steel-900">
-        {!prefersReducedMotion && (
+        {pageLoaded && !prefersReducedMotion && (
           <video
             className="absolute inset-0 h-full w-full object-cover"
             src="/videos/home-hero-bg.mp4"
