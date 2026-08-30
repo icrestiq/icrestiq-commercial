@@ -9,9 +9,18 @@ export default function Footer() {
           <div className="md:col-span-2">
             <img src={logo} alt="iCrestiQ Commercial" className="h-24 w-auto" />
             <p className="mt-3 max-w-sm text-sm leading-relaxed">
-              A commercial equipment division of iCrestiQ LLC, sourcing commercial and
-              industrial equipment for businesses, contractors, institutions, and government
-              buyers — starting with pressure washing and expanding into material handling.
+              A commercial equipment division of{' '}
+              <a
+                href="https://icrestiq.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline hover:text-orange-400"
+              >
+                iCrestiQ LLC
+              </a>
+              , sourcing commercial and industrial equipment for businesses, contractors,
+              institutions, and government buyers — starting with pressure washing and
+              expanding into material handling.
             </p>
           </div>
 

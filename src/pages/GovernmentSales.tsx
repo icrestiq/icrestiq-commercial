@@ -15,10 +15,19 @@ export default function GovernmentSales() {
             </h1>
             <p className="mt-4 max-w-xl text-lg leading-relaxed text-gauge-300">
               iCrestiQ Commercial is part of iCrestiQ LLC, a South Carolina small business,
-              SAM.gov registered with an active government contracting practice. We're
-              extending that same solicitation-ready approach to commercial and industrial
-              equipment for federal, state, and local buyers — starting with pressure washing
-              systems and expanding into additional equipment categories over time.
+              SAM.gov registered with an{' '}
+              <a
+                href="https://icrestiq.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline hover:text-orange-400"
+              >
+                active government contracting practice
+              </a>
+              . We're extending that same solicitation-ready approach to commercial and
+              industrial equipment for federal, state, and local buyers — starting with
+              pressure washing systems and expanding into additional equipment categories
+              over time.
             </p>
             <a
               href="/iCrestiQ-Capabilities-Statement.pdf"
