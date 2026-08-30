@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import { pressureWashingResources } from '../data/resources'
+import BreadcrumbSchema from '../components/BreadcrumbSchema'
 
 // Buyer type is informational only here — confirmed with the user that the
 // recommended equipment doesn't change based on who's asking, only which
@@ -11,6 +12,14 @@ export default function ApplicationMatrix() {
 
   return (
     <div>
+      <BreadcrumbSchema
+        crumbs={[
+          { name: 'Equipment', path: '/equipment' },
+          { name: 'Pressure Washing', path: '/equipment/pressure-washing' },
+          { name: 'Application Matrix' },
+        ]}
+      />
+
       <section className="border-b border-steel-700 bg-steel-900 px-6 py-16">
         <div className="mx-auto max-w-4xl">
           <nav aria-label="Breadcrumb" className="font-mono text-xs uppercase tracking-widest text-gauge-400">

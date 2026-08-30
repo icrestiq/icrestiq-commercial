@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
+import BreadcrumbSchema from '../components/BreadcrumbSchema'
 
 type BuyerType = 'Contractor' | 'Facilities / Property Management' | 'Government / Institutional'
 type Application = 'Grease, oil, or food-service buildup' | 'Dirt, mud, or general grime' | 'Large flat surfaces (lots, floors)'
@@ -87,6 +88,14 @@ export default function PressureWashingSelector() {
 
   return (
     <div>
+      <BreadcrumbSchema
+        crumbs={[
+          { name: 'Equipment', path: '/equipment' },
+          { name: 'Pressure Washing', path: '/equipment/pressure-washing' },
+          { name: 'Equipment Selector' },
+        ]}
+      />
+
       <section className="border-b border-steel-700 bg-steel-900 px-6 py-16">
         <div className="mx-auto max-w-3xl">
           <nav aria-label="Breadcrumb" className="font-mono text-xs uppercase tracking-widest text-gauge-400">

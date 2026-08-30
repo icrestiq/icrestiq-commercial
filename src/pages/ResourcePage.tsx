@@ -1,6 +1,7 @@
 import { Link, useParams, Navigate } from 'react-router-dom'
 import { getResourceBySlug, getResourcesBySlugs, type Block } from '../data/resources'
 import PsiGpmTool from '../components/PsiGpmTool'
+import BreadcrumbSchema from '../components/BreadcrumbSchema'
 
 const TYPE_LABEL: Record<string, string> = {
   core: 'Core Equipment',
@@ -116,6 +117,14 @@ export default function ResourcePage() {
           }}
         />
       )}
+
+      <BreadcrumbSchema
+        crumbs={[
+          { name: 'Equipment', path: '/equipment' },
+          { name: 'Pressure Washing', path: '/equipment/pressure-washing' },
+          { name: resource.label },
+        ]}
+      />
 
       <section className="border-b border-steel-700 bg-steel-900 px-6 py-16">
         <div className="mx-auto max-w-3xl">
