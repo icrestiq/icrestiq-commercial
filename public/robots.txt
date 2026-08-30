@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 Disallow: /admin
 
-Sitemap: https://icrestiqcommercial.com/sitemap.xml
+Sitemap: https://www.icrestiqcommercial.com/sitemap.xml

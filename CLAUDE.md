@@ -73,10 +73,16 @@ Never store passwords, API keys, access tokens, credentials, private authenticat
     `src/data/seo.ts`, or it will not be prerendered or appear in the
     sitemap. New equipment categories need no extra work — `seo.ts` derives
     their routes from `equipmentCategories.ts` automatically.
-  - `SITE_URL` in `src/data/seo.ts` is the real domain
-    (`https://icrestiqcommercial.com`, purchased 2026-08-28) — no longer a
-    placeholder, but DNS/Vercel domain attachment may not be done yet; check
-    `Project Status.md` for current deployment state.
+  - `SITE_URL` in `src/data/seo.ts` is the real domain — deliberately the
+    `www` form (`https://www.icrestiqcommercial.com`), not the apex, since
+    the apex domain 308-redirects to `www` at the Vercel/DNS level (not
+    something this app controls). Canonical tags, `sitemap.xml`, and OG/
+    Twitter URLs all need to match whichever domain actually serves content
+    directly — if the Vercel redirect direction ever changes, `SITE_URL`
+    must change with it. `index.html`'s static `og:image`/`twitter:image`/
+    JSON-LD `url`/`logo` fields are NOT touched by `prerender.mjs` (it only
+    rewrites canonical/og:url/twitter per route) — update them by hand in
+    `index.html` if the domain changes again.
   - Do not add a catch-all SPA-fallback rewrite (e.g. a `vercel.json` rule
     routing every path to `/index.html`) — it would defeat this work by
     serving the wrong content for every prerendered route. `dist/404.html`

@@ -2,11 +2,16 @@ import { equipmentCategories } from './equipmentCategories'
 import { POLICIES } from './policies'
 import { pressureWashingResources } from './resources'
 
-// Real domain, purchased 2026-08-28. Used for canonical URLs, Open Graph/
-// Twitter absolute URLs, and sitemap.xml. Still needs DNS pointed at the
-// Vercel deployment and the domain attached in the Vercel project before
-// this URL actually resolves to the live site.
-export const SITE_URL = 'https://icrestiqcommercial.com'
+// Real domain, purchased 2026-08-28, live since the same day. Used for
+// canonical URLs, Open Graph/Twitter absolute URLs, and sitemap.xml.
+// Deliberately the `www` form, not the apex — the apex domain 308-redirects
+// to `www.icrestiqcommercial.com` (Vercel's domain config, not something
+// this app controls), so declaring canonical/sitemap/OG URLs as `www`
+// means they resolve directly with a 200 instead of pointing at a URL that
+// immediately redirects elsewhere. Do not switch this back to the apex
+// form unless the Vercel domain config's redirect direction changes too —
+// they must always match.
+export const SITE_URL = 'https://www.icrestiqcommercial.com'
 export const SITE_NAME = 'iCrestiQ Commercial'
 
 export interface RouteMeta {
