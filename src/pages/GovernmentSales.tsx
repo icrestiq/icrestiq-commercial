@@ -58,7 +58,7 @@ export default function GovernmentSales() {
             <SpecRow label="Primary NAICS" value="423850" />
             <SpecRow label="Entity" value="iCrestiQ LLC" />
             <p className="mt-3 border-t border-steel-700/40 pt-3 font-mono text-xs text-gauge-400">
-              Also registered: 423830 · 423840 · 423710 · 423990
+              Also registered: 423830 · 423840 · 423710 · 423990 · 423720
             </p>
           </SpecPlate>
         </div>
