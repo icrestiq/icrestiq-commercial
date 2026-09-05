@@ -40,7 +40,7 @@ export default function About() {
           />
           <ValueCard
             title="Straight Answers"
-            body="If we're not yet an authorized dealer for a brand, we'll say so."
+            body="We list manufacturer authorizations by brand where established — see our Disclaimers for details."
           />
         </div>
       </section>

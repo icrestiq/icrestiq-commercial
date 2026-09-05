@@ -13,8 +13,8 @@ export const terms: Policy = {
     { type: 'h2', text: '2. What this Site provides' },
     { type: 'p', text: 'iCrestiQ Commercial sources commercial and industrial equipment — currently pressure washing systems, with material handling equipment and additional categories planned. The Site is a credibility and lead-generation resource: it describes equipment categories we source or are sourcing relationships for, and lets you submit a quote or sourcing request. The Site does not operate an online store or checkout, and no purchase or payment happens on the Site itself.' },
 
-    { type: 'h2', text: '3. Not a confirmed catalog; not an authorized dealer unless stated' },
-    { type: 'p', text: 'Equipment categories, subcategories, and any specifications shown on the Site are representative and typical for a category, not a confirmed, in-stock catalog of specific products or models. iCrestiQ Commercial is not an authorized dealer, reseller, or representative of any manufacturer named or implied on the Site unless that is explicitly and specifically stated. Do not treat anything on the Site as a manufacturer endorsement, warranty, or confirmed pricing.' },
+    { type: 'h2', text: '3. Representative categories; manufacturer authorization' },
+    { type: 'p', text: 'Equipment categories, subcategories, and any specifications shown on the Site are representative and typical for a category, not a confirmed, in-stock catalog of specific products or models. Manufacturer authorizations are listed by brand where established — see our Disclaimers policy for details. Do not treat anything on the Site as a manufacturer endorsement, warranty, or confirmed pricing.' },
 
     { type: 'h2', text: '4. Quote and sourcing requests are not binding offers' },
     { type: 'p', text: 'Submitting the Request a Quote form, or otherwise contacting us about equipment, is an inquiry, not a purchase, order, or binding offer by either party. Any actual sale, quote, pricing, availability, delivery, or contract terms are established separately, in writing, once we respond — not by anything on the Site itself.' },

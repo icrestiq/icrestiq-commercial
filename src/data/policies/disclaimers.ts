@@ -8,7 +8,7 @@ export const disclaimers: Policy = {
   effectiveDate: EFFECTIVE_DATE,
   blocks: [
     { type: 'h2', text: 'Dealer and manufacturer authorization' },
-    { type: 'p', text: 'iCrestiQ Commercial is not currently an authorized dealer, reseller, or representative of any manufacturer named or referenced on this Site unless that is explicitly and specifically stated for that manufacturer. We do not use manufacturer logos, dealer-only assets, or copyrighted product materials unless authorization to do so has been confirmed. Where a manufacturer is named as a category we source equipment for, that describes intent and outreach, not a confirmed dealer relationship.' },
+    { type: 'p', text: 'Manufacturer authorizations are listed by brand where established. Product categories shown are representative of the equipment we source. We do not use manufacturer logos, dealer-only assets, or copyrighted product materials unless authorization to do so has been confirmed.' },
 
     { type: 'h2', text: 'Equipment specifications' },
     { type: 'p', text: 'PSI, flow rate, capacity, and other specifications shown on the Site are typical or representative ranges for an equipment category — compiled to give a general sense of what’s available, not a confirmed spec sheet for an in-stock product. Actual specifications, availability, and pricing for any specific unit are confirmed only through a direct quote from us.' },

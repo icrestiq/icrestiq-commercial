@@ -83,12 +83,14 @@ export default function EquipmentCategory() {
       ) : (
         <section className="mx-auto max-w-4xl px-6 py-16">
           <SpecPlate tone="light">
-            <p className="font-mono text-xs uppercase tracking-widest text-gauge-600">Not Yet an Authorized Dealer</p>
+            <p className="font-mono text-xs uppercase tracking-widest text-gauge-600">Expanding Category</p>
             <p className="mt-2 text-sm leading-relaxed text-steel-700">
-              iCrestiQ Commercial is not currently an authorized dealer for any {category.name.toLowerCase()}{' '}
-              manufacturer. The list below describes the equipment types we're sourcing
-              relationships for, not a confirmed catalog. If you have a need in this category,
-              request a quote and we'll work it as a sourcing request.
+              Manufacturer authorizations for {category.name.toLowerCase()} are listed by brand
+              where established. The list below describes the equipment types we're sourcing
+              relationships for, not a confirmed catalog — see our{' '}
+              <Link to="/policies/disclaimers" className="underline hover:text-orange-600">Disclaimers</Link> for
+              details. If you have a need in this category, request a quote and we'll work it as
+              a sourcing request.
             </p>
           </SpecPlate>
 

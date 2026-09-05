@@ -45,9 +45,8 @@ export default function Footer() {
         <div className="mt-10 border-t border-steel-800 pt-6 font-mono text-xs text-gauge-400">
           <p>&copy; {new Date().getFullYear()} iCrestiQ LLC. All rights reserved.</p>
           <p className="mt-2 max-w-2xl">
-            iCrestiQ Commercial is not currently an authorized dealer of any manufacturer
-            named or referenced on this site unless explicitly stated. Product categories
-            shown are representative of the equipment we source, not a confirmed catalog. See
+            Manufacturer authorizations are listed by brand where established. Product
+            categories shown are representative of the equipment we source. See
             our <Link to="/policies/disclaimers" className="underline hover:text-orange-400">Disclaimers</Link> for more.
           </p>
           <nav aria-label="Policies" className="mt-4 flex gap-4">
