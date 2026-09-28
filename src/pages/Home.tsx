@@ -14,6 +14,7 @@ import { usePageLoaded } from '../hooks/usePageLoaded'
 const HOME_CARD_VIDEOS: Record<string, string> = {
   'pressure-washing': '/videos/pressure-washing-card-bg.mp4',
   'material-handling': '/videos/material-handling-card-bg.mp4',
+  'commercial-kitchen': '/videos/commercial-kitchen-card-bg.mp4',
 }
 
 export default function Home() {
@@ -88,6 +89,7 @@ export default function Home() {
             </p>
             <SpecRow label="Pressure Washing" value="Active" />
             <SpecRow label="Material Handling" value="Expanding" />
+            <SpecRow label="Commercial Kitchen" value="Expanding" />
             <SpecRow label="Government Ready" value="NAICS 423850" />
             <SpecRow label="More Categories" value="Planned" />
           </SpecPlate>
