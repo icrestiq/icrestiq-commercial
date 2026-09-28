@@ -141,6 +141,24 @@ export const equipmentCategories: EquipmentCategory[] = [
       { name: 'Related Warehouse and Facility Equipment', description: 'Additional warehouse and facility material-handling equipment.' },
     ],
   },
+  {
+    slug: 'commercial-kitchen',
+    name: 'Commercial Kitchen Equipment',
+    status: 'expanding',
+    tagline: 'Expanding into this category',
+    description:
+      'iCrestiQ Commercial is expanding into commercial kitchen equipment for restaurants, institutional kitchens, and foodservice operations. This category is not yet a confirmed catalog — tell us what you need and we will scope a sourcing request.',
+    subcategories: [
+      { name: 'Cooking Suites & Ranges', description: 'Commercial ranges, convection ovens, griddles, and fryers for high-volume kitchens.' },
+      { name: 'Refrigeration', description: 'Reach-in, walk-in, and undercounter refrigeration for food-safe storage.' },
+      { name: 'Ice Machines', description: 'Cube, nugget, and flake ice machines sized for restaurant and institutional service.' },
+      { name: 'Warewashing', description: 'Commercial dishwashers, glasswashers, and sanitizing systems for health-code compliance.' },
+      { name: 'Food Prep Equipment', description: 'Mixers, slicers, food processors, and prep tables for high-volume prep lines.' },
+      { name: 'Warming & Holding', description: 'Hot-holding cabinets, steam tables, and heat lamps that keep service at temperature.' },
+      { name: 'Ventilation & Hood Systems', description: 'Exhaust hoods and ventilation equipment sized to commercial kitchen codes.' },
+      { name: 'Related Foodservice Equipment', description: 'Additional commercial kitchen and foodservice equipment.' },
+    ],
+  },
 ]
 
 // Categories referenced in project strategy for future expansion, but not
